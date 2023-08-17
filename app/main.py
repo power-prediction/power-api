@@ -9,7 +9,7 @@ import pandas as pd
 class Condition(BaseModel):
     temperature : float
     rain_sum : float
-    humidity: float
+    humidity: int
     date: str
     hour : int
     surface_sum: float
