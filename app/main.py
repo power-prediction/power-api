@@ -7,6 +7,8 @@ import pickle
 import pandas as pd
 
 class Condition(BaseModel):
+    temperature : float
+    rain_sum : float
     humidity: float
     date: str
     hour : int
@@ -16,7 +18,7 @@ class Condition(BaseModel):
 
 api = FastAPI()
 
-@api.post("/get_electricity_pricing/")
+@api.post("/get_power_use/")
 def get_electricity_pricing(data: Condition):
     date = datetime.strptime(data.date,"%Y-%m-%d")
     humidity = data.humidity
@@ -63,7 +65,9 @@ def get_electricity_pricing(data: Condition):
     if data.building_type == '건물유형_호텔및리조트':
         건물유형_호텔및리조트 = 1
 
-    dict = {"습도(%)":humidity,
+    dict = {"기온(C)":data.temperature,
+            "강수량(mm)":data.rain_sum,
+            "습도(%)":humidity,
             "연도":year,
             "월":month,
             "일":day,
@@ -84,13 +88,11 @@ def get_electricity_pricing(data: Condition):
     
     model_input = pd.DataFrame(dict,index=[0])
 
-    with open("./random_forest_model.pkl","rb") as f:
+    with open("./rf_pred.pkl","rb") as f:
         rf_model = pickle.load(f)
     
     pred = rf_model.predict(model_input)
     return round(pred[0],2)
-
-
 
 
     
