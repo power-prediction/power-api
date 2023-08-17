@@ -6,7 +6,7 @@ COPY ./* /code/
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-CMD ["streamlit","run","app/홈.py","--server.allowRunOnSave TRUE"]
+CMD ["streamlit","run","app/홈.py"]
 
 
 
