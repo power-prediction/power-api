@@ -1,0 +1,5 @@
+fastapi == 0.101.0
+sklearn == 1.2.2
+pydantic == 2.1.1
+pickle == 0.7.5
+pandas == 2.0.3
